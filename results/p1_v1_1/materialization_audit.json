@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "assignment_count": 1200,
+  "realizations": 12,
+  "sources_per_class_per_realization": 50,
+  "unique_sources_per_class": {
+    "0": 600,
+    "1": 600
+  },
+  "maximum_pairwise_realization_overlap": 0,
+  "all_sources_train": true,
+  "canonical_ids_and_indexes_valid": true,
+  "deterministic_replay_identical": true,
+  "independent_replay_tolerance": 1e-10,
+  "unspecified_random_operations": 0,
+  "C1_C2_executed": false,
+  "scientific_experiments_executed": 0
+}

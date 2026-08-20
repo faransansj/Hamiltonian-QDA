@@ -1,0 +1,27 @@
+{
+  "protocol_version": "1.1.0",
+  "protocol_hash": "8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80",
+  "immutable": true,
+  "files": [
+    {
+      "path": "results/p1_v1_1/source_assignments.json",
+      "sha256": "93c9e13bc4cd7fead47e14b4001ef707dc9088c1f2001866b66d3aa3e10f18c3",
+      "bytes": 172948
+    },
+    {
+      "path": "results/p1_v1_1/source_states.npz",
+      "sha256": "afcc0eb81a0f081e937554622a43484d62370552342a7ce97ad80f78f364a25e",
+      "bytes": 683694
+    },
+    {
+      "path": "results/p1_v1_1/provenance.json",
+      "sha256": "edb856bd6f4034046a70c402b23abae3ce90ea518765a5a03fb7bf26a69fd558",
+      "bytes": 1586
+    },
+    {
+      "path": "results/p1_v1_1/materialization_audit.json",
+      "sha256": "9dfbe1a50efee381721c79257890d890b83df0c3a7caf98df6ddb5566b02b413",
+      "bytes": 485
+    }
+  ]
+}

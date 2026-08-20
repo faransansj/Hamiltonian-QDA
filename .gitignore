@@ -14,3 +14,5 @@ results/protocol_v1/*
 !results/protocol_v1/freeze_manifest_v1.json
 !results/protocol_v1_1/
 !results/protocol_v1_1/*.json
+!results/p1_v1_1/
+!results/p1_v1_1/*
