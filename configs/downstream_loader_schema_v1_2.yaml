@@ -1,0 +1,46 @@
+version: 1.2.0
+discovery:
+  entrypoint: results/p1_v1_2/materialized/materialization_freeze_manifest.json
+  manifest_chain: validate freeze manifest, verify its materialization_manifest_sha256, then read its exact materialization_manifest_path
+  record_path_fields: [relative_output_path, relative_provenance_path]
+  filesystem_globbing: forbidden except complete extra-file rejection after manifest validation
+  arm_selection: explicit one of C1 or C2; C0 remains the frozen real-only P1 source set
+validation_before_load:
+  - freeze manifest protocol_version and protocol_hash match v1.2 freeze
+  - parent_protocol_hash matches frozen v1.1
+  - p1_freeze_hash matches frozen P1
+  - freeze manifest status is PASS and materialization_complete is true
+  - every listed state and provenance file exists and its byte SHA-256 matches
+  - no unlisted file appears under the materialized namespace
+  - each provenance document satisfies the serialization schema and agrees with its manifest row
+  - each state has exact shape [16], dtype <c16, finite values, and its payload state_hash matches provenance
+  - IDs and state/provenance paths are globally unique
+  - freeze duplicate_validation.status is PASS for exact/projective checks under inherited v1.1 rules and the freeze manifest hash is trusted
+ordering:
+  realization: D00,D01,...,D11
+  within_realization: class 0 frozen P1 source positions 0..49 then class 1 positions 0..49
+  arm_dataset_rows: for each source position, frozen real source row immediately followed by its same-source synthetic row A00
+  source_synthetic_pairing: exact source_state_index and source_state_id equality
+labels:
+  mapping: integer class label 0 or 1 inherited from frozen P1 source
+  synthetic_label: exactly source_label
+shapes_and_dtypes:
+  individual_state: {shape: [16], dtype: complex128_little_endian}
+  per_arm_per_realization_training_states: {shape: [200, 16], dtype: complex128_little_endian}
+  per_arm_per_realization_labels: {shape: [200], dtype: int64_little_endian}
+  C0_per_realization_training_states: {shape: [100, 16], dtype: complex128_little_endian}
+  C0_per_realization_labels: {shape: [100], dtype: int64_little_endian}
+failure_behavior:
+  status: BLOCKED_before_training
+  fail_closed_on:
+    - missing artifact
+    - hash mismatch
+    - schema mismatch
+    - unexpected or unlisted row/file
+    - ordering mismatch
+    - duplicate ID/path or exact/projective duplicate policy failure
+    - protocol or P1 mismatch
+    - count, shape, dtype, label, or source-pairing mismatch
+  partial_load: forbidden
+  selective_skip_or_retry: forbidden
+QCNN_execution_in_this_revision: forbidden

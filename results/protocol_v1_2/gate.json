@@ -1,0 +1,21 @@
+{
+  "status": "READY",
+  "decision": [
+    "PROTOCOL_V1_2_FROZEN",
+    "C1_C2_MATERIALIZATION_READY"
+  ],
+  "protocol_version": "1.2.0",
+  "protocol_hash": "b6cd7f0e8f239563244a40149aa1e18eb451e4421b8a6cce7c200eff40471761",
+  "freeze_manifest_hash": "ffbdd650fca459003ff07043d73fd82b0b3bcb3d7c25313f289183fa0dd936ab",
+  "anchor_integrity": "PASS",
+  "semantic_diff": "PASS",
+  "dry_resolution": "PASS",
+  "independent_review": "PASS",
+  "unresolved_fields": 0,
+  "unspecified_randomness": 0,
+  "scientific_experiments_executed": 0,
+  "C1_C2_materialized": false,
+  "QCNN_or_downstream_executed": false,
+  "materialization_authorized": true,
+  "downstream_benchmark_authorized": false
+}

@@ -1,0 +1,105 @@
+{
+  "protocol_version": "1.2.0",
+  "protocol_hash": "b6cd7f0e8f239563244a40149aa1e18eb451e4421b8a6cce7c200eff40471761",
+  "parent_protocol_version": "1.1.0",
+  "parent_protocol_hash": "8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80",
+  "p1_freeze_hash": "1f8b28ec08f0686ea4b1162fbf62430dd118c34e13d50533e5f9572e541197e0",
+  "previous_audit_hash": "33ecc0dae26219b38b9a5a11ed59701c22e12792b8b15c82d8a15f9cb4dec1be",
+  "algorithm": "SHA-256",
+  "hashes_itself": false,
+  "scientific_semantics_changed": false,
+  "operational_determinism_completed": true,
+  "validation_status": "PASS",
+  "files": [
+    {
+      "path": "configs/downstream_loader_schema_v1_2.yaml",
+      "role": "normative",
+      "bytes": 2639,
+      "sha256": "3234e536b8d48a8a390dffbbb0f2e5a4325dd9baeeac3cc6bca14db5e7f8995d"
+    },
+    {
+      "path": "configs/freeze_schema_v1_2.yaml",
+      "role": "normative",
+      "bytes": 2825,
+      "sha256": "9b36e6be3fe4d853c2d2c57f3fc98d1cceefc7e37cd0a882cda7bf05cb96aa9b"
+    },
+    {
+      "path": "configs/materialization_contract_v1_2.yaml",
+      "role": "normative",
+      "bytes": 3024,
+      "sha256": "28684a63e6c890103254b1d30c28f873eadbe1f6a652957c638c87f03d41d86a"
+    },
+    {
+      "path": "configs/protocol_v1_2.yaml",
+      "role": "normative",
+      "bytes": 1865,
+      "sha256": "b6cd7f0e8f239563244a40149aa1e18eb451e4421b8a6cce7c200eff40471761"
+    },
+    {
+      "path": "configs/rng_contract_v1_2.yaml",
+      "role": "normative",
+      "bytes": 2697,
+      "sha256": "0b9c05bb2bb39155c2d2cf21c8b85a998c09073e5191dfe26a98799856205768"
+    },
+    {
+      "path": "configs/serialization_schema_v1_2.yaml",
+      "role": "normative",
+      "bytes": 2631,
+      "sha256": "e8817cb3b3fd8b3c13fbf76c10d95ec2c436ed4cf2e86526cbfb134368c06fcf"
+    },
+    {
+      "path": "docs/protocol_amendment_v1_2.md",
+      "role": "normative",
+      "bytes": 2533,
+      "sha256": "b715c0dbdea039afeb35a2973397202311e20fb2b44c1f80020bc56ab5c7d589"
+    },
+    {
+      "path": "pyproject.toml",
+      "role": "verification",
+      "bytes": 512,
+      "sha256": "66b22e95fbdc98ccaed08b4fc55cbcfd6bf2cd3e28e681abc146e408b85bd16d"
+    },
+    {
+      "path": "results/protocol_v1_2/dry_resolution.json",
+      "role": "verification",
+      "bytes": 2314550,
+      "sha256": "dbfb21c206dbdb2bc867636323f43c36c212f38d843454fe4a6064e9216b11b4"
+    },
+    {
+      "path": "results/protocol_v1_2/independent_review.json",
+      "role": "verification",
+      "bytes": 519,
+      "sha256": "1b2f44e41a6fd110e3225ebf35fc41b09963a6a0ab3885f1f51ab158b08d5b5a"
+    },
+    {
+      "path": "results/protocol_v1_2/rng_test_vectors.json",
+      "role": "verification",
+      "bytes": 3901,
+      "sha256": "9963cbea045ec65b5e6fc16a7fb4525a2f1e1d449b57979790e222e53bb767f6"
+    },
+    {
+      "path": "results/protocol_v1_2/semantic_diff.json",
+      "role": "verification",
+      "bytes": 1232,
+      "sha256": "2db471d3173d18784c566060962d68e5c7824b35ada499e1a9ffc01825ed73ae"
+    },
+    {
+      "path": "src/hamiltonian_qda/protocol_v1_2.py",
+      "role": "normative",
+      "bytes": 17930,
+      "sha256": "7bcb2fdbe5d6a2340753f651ef6e0a403a2bd1c44b745710b739e40bbd137004"
+    },
+    {
+      "path": "tests/test_protocol_v1_2.py",
+      "role": "verification",
+      "bytes": 17324,
+      "sha256": "bf58a09bbb35d4d1022b136c8e4c70df9ef5df59f97350461b08ae511f5bad09"
+    },
+    {
+      "path": "uv.lock",
+      "role": "verification",
+      "bytes": 44185,
+      "sha256": "1ca0071fa3eddc987b6935ad7458e38f307e09f6dd0612d0385909d0e5f05416"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+protocol:
+  name: Hamiltonian-QDA_P1
+  version: 1.2.0
+  status: FROZEN
+  frozen: true
+  phase: P1
+  parent_version: 1.1.0
+  parent_protocol_sha256: 8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80
+  p1_freeze_manifest_sha256: 1f8b28ec08f0686ea4b1162fbf62430dd118c34e13d50533e5f9572e541197e0
+  previous_audit_sha256: 33ecc0dae26219b38b9a5a11ed59701c22e12792b8b15c82d8a15f9cb4dec1be
+  scientific_semantics_changed: false
+  operational_determinism_completed: true
+  scientific_experiments_executed_at_freeze: 0
+  C1_C2_materialized_at_freeze: false
+  downstream_benchmark_executed_at_freeze: false
+  inherited_scientific_contract: configs/protocol_v1_1.yaml
+  operational_contract: configs/materialization_contract_v1_2.yaml
+  rng_contract: configs/rng_contract_v1_2.yaml
+  serialization_schema: configs/serialization_schema_v1_2.yaml
+  freeze_schema: configs/freeze_schema_v1_2.yaml
+  downstream_loader_schema: configs/downstream_loader_schema_v1_2.yaml
+resolved_contracts_exactly:
+  - cross_class_source_candidate_traversal_order
+  - exact_numpy_rng_api_arguments_and_draw_consumption_order
+  - canonical_synthetic_id_and_output_path
+  - serialized_artifact_layout_and_shape
+  - C1_C2_checksum_and_freeze_schema
+  - deterministic_replay_equality_and_tolerance
+  - downstream_dataset_ordering_layout_and_loader_contract
+scope_guard:
+  allowed_changes: operational_determinism_only
+  scientific_or_numerical_parameter_change: forbidden
+  C1_mathematical_transformation_change: forbidden
+  C2_mathematical_transformation_change: forbidden
+  P1_change: forbidden
+  seed_domain_or_payload_change: forbidden
+  statistical_or_hypothesis_change: forbidden
+materialization_gate:
+  status: READY
+  decision: C1_C2_MATERIALIZATION_READY
+  authorization_scope: C1_C2_materialization_only_under_all_v1_2_contracts
+  QCNN_or_downstream_benchmark_authorized: false

@@ -1,0 +1,71 @@
+version: 1.2.0
+materialization_manifest:
+  path: results/p1_v1_2/materialized/materialization_manifest.json
+  canonical_json: UTF-8, lexicographically sorted keys, comma/colon separators without whitespace, ensure_ascii false, one trailing LF
+  records_order: canonical traversal order, exactly 2400 records
+  record_required_fields:
+    - global_row
+    - arm_row
+    - arm
+    - realization
+    - class
+    - source_position
+    - source_state_id
+    - state_index
+    - source_g
+    - seed_payload
+    - seed_sha256
+    - derived_seed_uint128
+    - synthetic_id
+    - relative_output_path
+    - relative_provenance_path
+    - state_sha256
+    - provenance_sha256
+    - state_payload_sha256
+    - validation_status
+freeze_manifest:
+  path: results/p1_v1_2/materialized/materialization_freeze_manifest.json
+  hashes_itself: false
+  canonical_json: same as materialization_manifest
+  files_covered:
+    scientific_artifacts: all 2400 state.npy files
+    metadata_artifacts: all 2400 provenance.json files and materialization_manifest.json
+    excluded: materialization_freeze_manifest.json itself
+  file_entry_fields: [path, role, bytes, sha256]
+  file_entry_order: lexicographic ascending relative path by UTF-8 byte order
+  top_level_required_fields:
+    - protocol_version
+    - protocol_hash
+    - parent_protocol_version
+    - parent_protocol_hash
+    - p1_freeze_hash
+    - previous_audit_hash
+    - implementation_commit
+    - materializer_entrypoint
+    - implementation_source_hashes
+    - environment
+    - files
+    - validation_status
+    - materialization_complete
+    - materialization_gate
+    - materialization_manifest_path
+    - materialization_manifest_sha256
+    - duplicate_validation
+    - scientific_experiments_executed
+  materializer_entrypoint: repository-relative source path of the executed materializer; must be included in implementation_source_hashes
+  implementation_source_hashes: SHA-256 entries sorted by unique path for every source/config used to materialize or validate C1/C2; validator rereads and hashes each path and requires all normative v1.2 configs/helpers plus materializer_entrypoint
+  environment_exact: {python: 3.12.13, numpy: 2.5.2, byteorder: little}
+  validation_status_required: PASS
+  materialization_gate_required: C1_C2_MATERIALIZATION_READY
+  scientific_experiments_executed_required: 0
+checksums:
+  algorithm: SHA-256
+  coverage: exact complete bytes of each listed file
+  path_form: repository-relative POSIX path
+  duplicate_path: BLOCKED
+  missing_or_extra_file: BLOCKED
+  mismatch: BLOCKED
+references:
+  parent_protocol_hash: 8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80
+  p1_freeze_hash: 1f8b28ec08f0686ea4b1162fbf62430dd118c34e13d50533e5f9572e541197e0
+  previous_audit_hash: 33ecc0dae26219b38b9a5a11ed59701c22e12792b8b15c82d8a15f9cb4dec1be

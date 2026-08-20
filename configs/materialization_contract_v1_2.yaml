@@ -1,0 +1,49 @@
+version: 1.2.0
+classification:
+  cross_class_source_candidate_traversal_order: NEW_OPERATIONAL_DECISION
+  exact_numpy_rng_api_arguments_and_draw_consumption_order: NEW_OPERATIONAL_DECISION
+  canonical_synthetic_id_and_output_path: NEW_OPERATIONAL_DECISION
+  serialized_artifact_layout_and_shape: NEW_OPERATIONAL_DECISION
+  C1_C2_checksum_and_freeze_schema: NEW_OPERATIONAL_DECISION
+  deterministic_replay_equality_and_tolerance: NEW_OPERATIONAL_DECISION
+  downstream_dataset_ordering_layout_and_loader_contract: NEW_OPERATIONAL_DECISION
+neutrality:
+  reason: Each rule is necessary to remove an implementation choice identified by the frozen prior audit.
+  alternatives_considered:
+    traversal: [C2_then_C1, C1_then_C2, interleaved]
+    class_order: [class_0_then_1, class_1_then_0]
+    artifact_layout: [one_file_per_state, aggregate_per_arm, aggregate_per_realization]
+    replay: [byte_only, canonical_exact, numerical_tolerance_for_statevectors]
+  selection_basis: dependency_order_then_ascending_frozen_identity_and_simple_fail_closed_files
+  scientifically_neutral: Rules determine execution and artifact representation only; distributions, transformations, acceptance, counts, seeds, sources, and evaluation semantics are inherited unchanged.
+  test_or_QCNN_metrics_accessed: false
+  scientific_experiments_executed: 0
+traversal:
+  total_order_pseudocode:
+    - "for arm in [C2, C1]"
+    - "for realization in [D00, D01, ..., D11]"
+    - "for class_label in [0, 1]"
+    - "for source in frozen P1 class list order at positions [0, 1, ..., 49]"
+    - "create exactly one logical synthetic output A00"
+    - "for attempt in [0, 1, ..., 127], consume that attempt's complete draw block, validate, accept first passing candidate, otherwise BLOCKED after attempt 127"
+  arm_order_reason: C1 target radius depends on the paired accepted C2 output.
+  source_order_change: forbidden
+  prior_synthetic_pool_order: all accepted earlier outputs in this total order within the same arm and realization
+  unused_branch_consumption:
+    C2: Every entered attempt consumes direction then step before any candidate validation; no draws occur after acceptance.
+    C1: Every entered attempt consumes all 16 real then all 16 imaginary normals before any candidate validation; no draws occur after acceptance.
+identity:
+  grammar: "p1v1_2-{ARM}-D{RR}-Y{C}-S{IIII}-A00"
+  regex: "^p1v1_2-(C1|C2)-D(0[0-9]|1[01])-Y[01]-S(0[0-9]{3}|1[0-6][0-9]{2}|169[0-9])-A00$"
+  fields:
+    ARM: uppercase C1 or C2
+    RR: zero-padded realization integer 00..11
+    C: class digit 0 or 1
+    IIII: zero-padded canonical state_index 0000..1699
+    A00: sole augmentation index, uppercase A plus 00
+  separator: hyphen
+  case: exactly_as_grammar
+  relative_state_path: "results/p1_v1_2/materialized/{ARM}/D{RR}/Y{C}/{synthetic_id}/state.npy"
+  relative_provenance_path: "results/p1_v1_2/materialized/{ARM}/D{RR}/Y{C}/{synthetic_id}/provenance.json"
+  absolute_paths: forbidden
+  collision_rule: any duplicate ID or either path is BLOCKED before writing

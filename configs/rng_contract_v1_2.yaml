@@ -1,0 +1,44 @@
+version: 1.2.0
+inherited_seed_contract: configs/seed_manifest_v1_1.yaml
+common:
+  numpy_class: numpy.random.Generator
+  bit_generator_constructor: numpy.random.PCG64DXSM(derived_seed_uint128)
+  payload: hamiltonian-qda|1.1.0|ARM|PURPOSE|REALIZATION|CLASS|STATE_INDEX|ROOT_SEED
+  derivation: SHA-256 canonical UTF-8 payload; first 16 digest bytes as unsigned big-endian integer
+  lifecycle: recreate exactly once per logical output; persist only across attempts for that output
+  attempt_in_payload: false
+  generator_sharing: forbidden across outputs, arms, realizations, classes, or sources
+  numpy_version_exact: 2.5.2
+  python_requirement: ">=3.12"
+  environment_enforcement: pyproject.toml and uv.lock must resolve exactly NumPy 2.5.2 before any materialization
+  dtype_assumptions: generated scalar/arrays are float64 unless explicitly int64
+C2:
+  purpose: proposal
+  root_seed: 22001
+  per_attempt_calls_exact_order:
+    - "direction_bit = rng.integers(low=0, high=2, size=None, dtype=np.int64, endpoint=False)"
+    - "direction = -1 if int(direction_bit) == 0 else +1"
+    - "step = rng.uniform(low=0.005, high=0.020, size=None)"
+    - "target_g = np.float64(source_g) + np.float64(direction) * np.float64(step)"
+  direction_mapping: {0: -1, 1: 1}
+  scalar_dtype: {direction_bit: int64, step: float64, target_g: float64}
+  consumption: Both calls occur for every entered attempt before validation. Rejection advances the persistent generator to the next attempt. Acceptance stops immediately. Unentered and post-acceptance attempts consume nothing.
+C1:
+  purpose: tangent
+  root_seed: 21001
+  component_basis_order: canonical statevector indices 0,1,...,15
+  per_attempt_calls_exact_order:
+    - "a = rng.normal(loc=0.0, scale=1.0, size=(16,)).astype('<f8', copy=False)"
+    - "b = rng.normal(loc=0.0, scale=1.0, size=(16,)).astype('<f8', copy=False)"
+    - "z = (a.astype('<c16') + 1j*b.astype('<c16')) / np.sqrt(np.float64(2.0))"
+  shape: [16]
+  component_consumption: all a components in index order 0..15, then all b components in index order 0..15
+  dtype: {a: little_endian_float64, b: little_endian_float64, z: little_endian_complex128}
+  consumption: Both 16-value calls occur for every entered attempt before tangent projection or validation. Rejection advances the persistent generator to the next 32-value block. Acceptance stops immediately. Unentered and post-acceptance attempts consume nothing.
+forbidden:
+  - numpy.random global APIs
+  - Generator.choice for C2 direction
+  - vectorizing draws across outputs or attempts
+  - recreating a generator between retries
+  - consuming draws for unentered attempts
+  - changing call shape, order, dtype, endpoint, or keyword values

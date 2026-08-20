@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "parent_version": "1.1.0",
+  "parent_hash": "8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80",
+  "new_version": "1.2.0",
+  "new_hash": "b6cd7f0e8f239563244a40149aa1e18eb451e4421b8a6cce7c200eff40471761",
+  "scientific_semantics_changed": false,
+  "operational_determinism_completed": true,
+  "changed_exactly": [
+    "cross_class_source_candidate_traversal_order",
+    "exact_numpy_rng_api_arguments_and_draw_consumption_order",
+    "canonical_synthetic_id_and_output_path",
+    "serialized_artifact_layout_and_shape",
+    "C1_C2_checksum_and_freeze_schema",
+    "deterministic_replay_equality_and_tolerance",
+    "downstream_dataset_ordering_layout_and_loader_contract"
+  ],
+  "unchanged": {
+    "C1_mathematical_and_scientific_transformation": true,
+    "C2_mathematical_and_scientific_transformation": true,
+    "P1_source_assignments": true,
+    "scientific_parameters": true,
+    "source_counts": true,
+    "realization_and_class_structure": true,
+    "root_seeds_and_payload_domains": true,
+    "scientific_hypothesis": true,
+    "downstream_evaluation_semantics": true
+  },
+  "scope_violation": false,
+  "test_or_QCNN_metrics_accessed": false,
+  "scientific_experiments_executed": 0
+}
