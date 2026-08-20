@@ -1,0 +1,36 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "configs/protocol_v1_1.yaml",
+      "sha256": "8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80"
+    },
+    {
+      "path": "configs/seed_manifest_v1_1.yaml",
+      "sha256": "299d61073f4d1a1f89350114eb8594f0bd85f37b5aa60a50b6c1257aac7b4268"
+    },
+    {
+      "path": "docs/protocol_v1_1.md",
+      "sha256": "91879236f2de18cba433974169412abdf9ff60fd42b07d7800a796476a83aab4"
+    },
+    {
+      "path": "docs/protocol_amendment_v1_1.md",
+      "sha256": "f557216af276791d453ea6f7cbf0a0fa9590c818e1c1204e53966c911ea76ed0"
+    },
+    {
+      "path": "results/protocol_v1_1/semantic_diff_audit.json",
+      "sha256": "47237f093d02ee5e0a5d1c81f2b0a4a951a08434b2870aece14b42df65caf0b9"
+    },
+    {
+      "path": "results/protocol_v1_1/source_assignment_audit.json",
+      "sha256": "a5acc89988ec36ff906d5ab5c9f90c44108ed2d2c9790867d4d91199de17cfb8"
+    },
+    {
+      "path": "results/protocol_v1_1/seed_test_vectors.json",
+      "sha256": "4d149bd6818d91d891332ffa30ccf848f58815b03b001bfa9f077f4e1ce70802"
+    }
+  ],
+  "immutable": true,
+  "parent_protocol_sha256": "ee1219a2188bcc428dcb5331e7444ab686bb71ac4ae6a86e6d8959affe933945",
+  "protocol_version": "1.1.0"
+}

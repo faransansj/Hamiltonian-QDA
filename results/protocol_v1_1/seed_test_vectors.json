@@ -1,0 +1,44 @@
+{
+  "bit_generator": "PCG64DXSM",
+  "derivation": "sha256 UTF-8; first 16 bytes unsigned big-endian",
+  "protocol_version": "1.1.0",
+  "status": "PASS",
+  "vectors": [
+    {
+      "name": "SOURCE class 0",
+      "payload": "hamiltonian-qda|1.1.0|SOURCE|source_assignment|0|13001",
+      "seed": 33952997729012768767026880753340359036,
+      "sha256": "198b1c08602856f0e9479de4f2c1a17c18c8f3cf805c7b7e47168e71f77aa81f"
+    },
+    {
+      "name": "SOURCE class 1",
+      "payload": "hamiltonian-qda|1.1.0|SOURCE|source_assignment|1|13001",
+      "seed": 202735388653331845533942486417103151610,
+      "sha256": "98856a636a172c244de5ea8c6d6461fa4e76c7be5e4cc566ab841aff2885ef67"
+    },
+    {
+      "name": "C1 realization 0 class 0 state_index 0",
+      "payload": "hamiltonian-qda|1.1.0|C1|tangent|0|0|0|21001",
+      "seed": 289007594941769029443424440060746651703,
+      "sha256": "d96cd68f6259cef28c2dcfd9546bd837a9a4c9b1c815861f1511c62b901cd399"
+    },
+    {
+      "name": "C2 realization 0 class 0 state_index 0",
+      "payload": "hamiltonian-qda|1.1.0|C2|proposal|0|0|0|22001",
+      "seed": 45124012870139606227963363264215928938,
+      "sha256": "21f2919a3d34c8af3655332128ac506a955497dc11a889f022f44aeda95ae230"
+    },
+    {
+      "name": "C2 realization 3 class 1 state_index 137",
+      "payload": "hamiltonian-qda|1.1.0|C2|proposal|3|1|137|22001",
+      "seed": 186230902716939655516223118113156929485,
+      "sha256": "8c1ac467f565733c1864860fd19c97cd06b15c75548224021c06c9b482890611"
+    },
+    {
+      "name": "C1 realization 11 class 1 state_index 1699",
+      "payload": "hamiltonian-qda|1.1.0|C1|tangent|11|1|1699|21001",
+      "seed": 125375909527954307042237016114968483946,
+      "sha256": "5e528597bae638f8463ce4d0dd05586a6b873a012eb88e89a2dffaa0cb35ee0b"
+    }
+  ]
+}

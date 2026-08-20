@@ -1,0 +1,30 @@
+{
+  "algorithm": "one sorted-state_index PCG64DXSM permutation per class; contiguous 50-state realization slices",
+  "all_selected_states_train": true,
+  "deterministic_replay_identical": true,
+  "maximum_pairwise_realization_overlap": 0,
+  "metadata_only": true,
+  "protocol_version": "1.1.0",
+  "quantum_states_generated": 0,
+  "realization_assignment_sha256": [
+    "543bc2dc4a09c43916b859d44334a5550ae63671aa95d4ce6099a5b8e8f429b2",
+    "eb59a2d8f499530cdb1c84f29aa29989f31e5e7b48b57ee3df8acad3d9462f00",
+    "f6a63247d3bf9f8e6bd7413103a6cd0186e6f4395c8e5a9a3fb3bc1e6c00e478",
+    "cc36f88fa70c90ef5c35bd8f1a524e629c71ffe6e655f548eca2f1fa1dea0caa",
+    "2482f794b993550fc2506fccb8724fad2982bef0be0323136ea39126b6386023",
+    "c55160aeb95622e9aa991b271559e4351fa1dd20cf76f85d887e8665f5c8897c",
+    "79eb4416f7335aa53d3e442a104d1fa8b9829124ef7132f3a848c027ff0a9efb",
+    "29fbd80eca9bcc42253fd018f2888fe3d7c678274318cdd0537510065b3f10a4",
+    "61f5cd2ed39ce2dfc135cfdb71aa8db05705c11cc0b6887302b3095cfd5ba3c6",
+    "e57e0b6a484755baee7ae8f7aff1a1eaacf7ef5a7ab0622537e8a8d8ed2d9d53",
+    "249034080c4faee4cb624430332eafa8747bac993b807594c13e44c2b2fa3c17",
+    "21675f88a1399fe9796103f53fad813906f72b200ebcff431e962778358f3dd3"
+  ],
+  "realizations": 12,
+  "states_per_class_per_realization": 50,
+  "states_per_realization": 100,
+  "status": "PASS",
+  "total_source_assignments": 1200,
+  "unique_class_0": 600,
+  "unique_class_1": 600
+}

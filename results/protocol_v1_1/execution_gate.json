@@ -1,0 +1,20 @@
+{
+  "C1_rng_semantics_unambiguous": true,
+  "C2_rng_semantics_unambiguous": true,
+  "canonical_state_identity_frozen": true,
+  "freeze_manifest_valid": true,
+  "materialization_started": false,
+  "p1_materialization_authorized": true,
+  "protocol_version": "1.1.0",
+  "realization_disjointness_pass": true,
+  "scientific_experiments_executed": 0,
+  "scientific_semantics_unchanged": true,
+  "seed_derivation_frozen": true,
+  "seed_serialization_frozen": true,
+  "seed_test_vectors_pass": true,
+  "semantic_diff_gate": "PASS",
+  "source_assignment_authority_unique": true,
+  "source_assignment_deterministic": true,
+  "status": "READY",
+  "v1_artifacts_unchanged": true
+}

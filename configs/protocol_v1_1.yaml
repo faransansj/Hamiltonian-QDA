@@ -1,0 +1,294 @@
+protocol:
+  name: Hamiltonian-QDA_P1
+  version: 1.1.0
+  status: FROZEN
+  frozen: true
+  phase: P1
+  scientific_experiments_executed_at_freeze: 0
+  question: Under an equal real-data and synthetic-data budget and a frozen QCNN protocol, do exact same-label
+    TFIM ground states sampled along the physical Hamiltonian manifold improve blocked-g QCNN generalization
+    relative to a projective-displacement-matched generic tangent perturbation?
+  operative_files:
+    tfim: configs/tfim_v1.yaml
+    split: configs/split_manifest_v1.yaml
+    qcnn: configs/qcnn_v1.yaml
+    seeds: configs/seed_manifest_v1_1.yaml
+    statistics: docs/statistical_plan_v1.md
+    execution_gate: results/protocol_v1_1/execution_gate.json
+  parent_protocol_sha256: ee1219a2188bcc428dcb5331e7444ab686bb71ac4ae6a86e6d8959affe933945
+  amendment_reason: randomization semantics were ambiguous before any scientific execution
+arms:
+  C0:
+    name: Real-only
+    training_data: frozen_real_training_subset
+    synthetic_count: 0
+  C1:
+    name: Generic displacement-matched control
+    sources: exactly_C2_source_state_ids_in_same_order
+    synthetic_per_source: 1
+    direction_distribution: isotropic_complex_Gaussian_projective_tangent
+    target_displacement: paired_C2_source_to_synthetic_FS_distance
+  C2:
+    name: Exact Hamiltonian-Manifold Oracle
+    sources: all_real_source_state_ids
+    synthetic_per_source: 1
+    generation: exact_ground_state_at_continuous_train_support_target_g
+    interpretation: oracle_existence_test_not_scalable_algorithm
+budget:
+  primary_real_states_per_class: 50
+  classes: 2
+  real_count_per_realization: 100
+  source_states_augmented_per_realization: 100
+  synthetic_states_per_source: 1
+  synthetic_ratio_C1_C2: 1.0
+  total_synthetic_count_per_C1_or_C2_realization: 100
+  budget_sweep: forbidden
+  historical_other_budgets: secondary_not_executed_in_P1
+  rationale: Fifty per class preserves the archived q50 focal setting, is neither the smallest nor a post-result
+    selected budget, and permits twelve disjoint source realizations on the frozen grid.
+  proposal_failure: BLOCKED_before_training_no_source_replacement_no_reduced_count
+source_assignment:
+  realizations: 12
+  method: For each class y, sort eligible TRAIN states by ascending canonical state_index, apply exactly
+    one class-level PCG64DXSM permutation, then assign realization r the contiguous slice [50*r:50*(r+1)].
+  unused_reserve_per_class: 50
+  reserve_replacement_use: forbidden
+  source_overlap_between_realizations: forbidden
+  C1_C2_pairing: exact_ordered_ID_equality_required
+  rng_identity: class_label_only_no_realization_id
+  canonical_source_identity: state_index
+  pairwise_realization_disjointness: required
+C2_proposal:
+  name: Exact Hamiltonian-Manifold Oracle
+  runtime_information_allowed:
+  - state_index
+  - source_g
+  - source_label
+  - train_support_components
+  - protocol_config
+  - seed_manifest
+  runtime_information_forbidden:
+  - validation_g_values
+  - test_g_values
+  - validation_states
+  - test_states
+  - held_out_geometry
+  - QCNN_metrics
+  train_support_components_inclusive:
+  - - 0.1
+    - 0.449
+  - - 0.65
+    - 0.949
+  - - 1.051
+    - 1.35
+  - - 1.551
+    - 1.9
+  candidate_enumeration: Attempts k=0..127 use the per-source C2 PCG64DXSM stream canonically identified
+    by realization, class, and state_index. Each attempt draws direction uniformly from {-1,+1}, then
+    step uniformly from float64 half-open [0.005,0.020), and sets target_g=source_g+direction*step. Candidates
+    are considered strictly in attempt order.
+  direction_distribution: discrete_uniform_minus1_plus1
+  step_distribution: continuous_uniform_float64_half_open
+  minimum_step: 0.005
+  maximum_step_exclusive: 0.02
+  maximum_attempts: 128
+  acceptance:
+  - target_and_source_in_same_train_support_component
+  - target_label_equals_source_label
+  - target_at_least_5e-7_from_every_real_train_grid_g
+  - target_at_least_5e-7_from_prior_C2_targets_in_realization
+  - exact_ground_state_numerically_valid
+  - common_duplicate_policy_passes
+  same_label_rejection: mandatory
+  critical_margin_rejection: mandatory
+  boundary_handling: reject_and_continue_attempt_order
+  duplicate_rejection: common_policy
+  target_selection: first_accepted_candidate_only
+  fallback: none_BLOCKED_after_attempt_127
+  favorable_candidate_scoring: forbidden
+  rationale: symmetric_local_step_without_held_out_direction_information
+  rejected_alternatives:
+    nearest_grid: risks_duplicates_and_finite_pool_resampling
+    direction_toward_block: held_out_task_shaping
+    FS_or_QGT_step: reserved_for_P2
+    observable_or_QCNN_selection: post_selection
+C1_generator:
+  source_pairing: exact_C2_source_ID_and_order
+  FS_definition: d_FS(a,b)=arccos(clip(|<a|b>|/(||a||*||b||),0,1)) radians
+  epsilon_FS_radians: 1.0e-10
+  target_radius: measured_C2_source_to_C2_state_FS_distance
+  candidate_tangent_sampling: For attempt k=0..127 draw z=(a+i*b)/sqrt(2), where every component of a
+    and b is iid Normal(0,1) from the per-source C1 PCG64DXSM stream canonically identified by realization,
+    class, and state_index; set v=z-psi*vdot(psi,z).
+  orthogonal_projection_tolerance: 1.0e-12
+  normalization: normalize_source_then_normalize_tangent_then_construct_and_normalize_candidate
+  construction: phi = cos(target_radius)*psi + sin(target_radius)*v
+  phase_handling: canonicalize_candidate_after_construction_using_TFIM_global_phase_rule
+  maximum_attempts: 128
+  acceptance:
+  - finite_complex128_components
+  - tangent_norm_above_1e-12
+  - candidate_norm_error_at_most_1e-12
+  - absolute_FS_matching_error_at_most_1e-10_radians
+  - common_duplicate_policy_passes
+  fallback: none_BLOCKED_after_attempt_127
+  tolerance_relaxation: forbidden
+  physical_ground_state_residual: not_applicable_and_not_required
+novelty:
+  comparison_pool: all_real_training_states_and_prior_accepted_synthetics_in_same_arm_and_realization
+  exact_state_duplicate:
+    definition: canonical_state_hash_equality
+    action_C1_C2: reject
+  projective_duplicate:
+    definition: 1 - |<a|b>|^2 <= 1.0e-12 for normalized states
+    threshold_infidelity: 1.0e-12
+    action_C1_C2: reject
+  near_duplicate:
+    definition: 1 - |<a|b>|^2 <= 1.0e-8 for normalized states
+    threshold_infidelity: 1.0e-08
+    action_C1_C2: report_only
+  cross_arm_duplicates: report_only
+  required_reports:
+  - source_FS_distance
+  - nearest_training_FS_distance
+  - nearest_training_fidelity
+  - near_duplicate_flag
+validity:
+  C2:
+    required:
+    - normalization
+    - finite_values
+    - eigenpair_residual
+    - ground_state_energy
+    - spectral_gap
+    - target_g
+    - label_consistency
+    - state_hash
+    normalization_tolerance: 1.0e-12
+    eigenpair_residual_tolerance: 1.0e-10
+    minimum_spectral_gap_exclusive: 1.0e-10
+  C1:
+    required:
+    - normalization
+    - finite_values
+    - matched_FS_displacement
+    - source_label_provenance
+    - state_hash
+    normalization_tolerance: 1.0e-12
+  any_failure_before_training: BLOCKED
+provenance_schema:
+  required_fields:
+  - synthetic_id
+  - arm
+  - source_state_index
+  - source_g
+  - source_label
+  - proposal_seed
+  - target_g
+  - FS_displacement
+  - generation_method
+  - protocol_hash
+  - state_hash
+  C1_target_g_value: null
+  synthetic_samples_are_inferential_replicates: false
+qcnn:
+  config: configs/qcnn_v1.yaml
+  immutable_measurement_instrument: true
+  arms_share_initialization_optimizer_and_update_schedule_within_pairing_key: true
+  tuning_after_freeze: forbidden
+endpoints:
+  primary: blocked_g_test_accuracy_at_final_update_300
+  primary_estimand: mean_D(mean_Q(Accuracy(C2)-Accuracy(C1)))
+  primary_contrast_exact: C2_minus_C1
+  key_secondary_estimand: mean_D(mean_Q(Accuracy(C2)-Accuracy(C0)))
+  secondary_diagnostic_only:
+  - macro_F1
+  - seed_consistency
+  - nearest_state_fidelity
+  - FS_displacement
+  - physics_observables
+  secondary_may_override_verdict: false
+statistics:
+  independent_cluster: dataset_realization
+  pairing_key:
+  - dataset_realization_id
+  - qcnn_seed_index
+  qcnn_seeds_per_realization: 3
+  paired_keys: 36
+  arm_runs: 108
+  observations_dependent_within:
+  - dataset_realization
+  - qcnn_seed_pair_across_arms
+  - shared_fixed_test_manifest
+  synthetic_states_independent_replicates: false
+  point_estimate: unweighted_mean_of_12_realization_deltas_after_unweighted_mean_of_3_qcnn_seed_deltas
+  bootstrap:
+    resampling_unit: paired_dataset_realization_delta
+    preserve_arm_pairing: true
+    resample_synthetic_states: false
+    replicates: 100000
+    rng_seed: 51001
+    bit_generator: PCG64DXSM
+    CI_level: 0.95
+    method: two_sided_percentile
+    quantiles:
+    - 0.025
+    - 0.975
+    numpy_quantile_method: linear
+    aggregation_order: qcnn_seed_mean_then_realization_mean
+  missing_or_failed_run: INVALID_no_selective_retry
+  outlier_removal: forbidden
+  minimum_meaningful_effect: 0.02
+  decision_uses_unrounded_float64: true
+  PASS: valid_complete AND delta_primary >= 0.02 AND lower_95_percent_CI > 0.0
+  FAIL: valid_complete AND NOT(delta_primary >= 0.02 AND lower_95_percent_CI > 0.0)
+leakage:
+  default: anything_not_explicitly_allowed_is_forbidden_for_augmentation_construction
+  validation_allowed:
+  - record_QCNN_loss
+  - record_QCNN_accuracy
+  - integrity_checks_not_selecting_model_or_augmentation
+  validation_forbidden:
+  - checkpoint_selection
+  - early_stopping
+  - augmentation_design
+  - threshold_selection
+  test_allowed:
+  - single_final_evaluation_after_complete_frozen_matrix
+  forbidden:
+  - test_states_for_augmentation
+  - test_g_locations_for_C2_placement
+  - validation_or_test_geometry_for_FS_calibration
+  - validation_or_test_augmentation_neighbors
+  - held_out_states_for_threshold_selection
+  - blocked_test_metrics_for_step_selection
+  - final_test_metrics_for_checkpoint_selection
+  assertion_failure: INVALID_if_execution_started_otherwise_BLOCKED
+statuses:
+  READY: Protocol_and_integrity_conditions_permit_P1_to_start
+  BLOCKED: Required_pre_execution_condition_missing
+  PASS: Valid_completed_P1_satisfies_scientific_criterion
+  FAIL: Valid_completed_P1_does_not_satisfy_scientific_criterion
+  INVALID: Execution_occurred_but_integrity_or_protocol_violation_prevents_interpretation
+  precedence:
+  - INVALID
+  - PASS
+  - FAIL
+oracle_policy:
+  statement_1: Exact Hamiltonian resampling in P1 is an oracle existence test, not yet a practical scalable
+    augmentation algorithm.
+  statement_2: If this oracle does not provide downstream utility, there is no immediate justification
+    for building AGP, QuDDPM, or learned approximations of it.
+  statement_3: If the oracle succeeds, later work may attempt to reproduce its utility with geometry-adaptive
+    and approximate physical transport.
+  acquisition_interpretation: continuous_target_exact_state_oracle_benchmark
+stop_go:
+  on_FAIL: hard_STOP_no_P2_P3_P4_QuDDPM_or_learned_generator
+  allowed_after_FAIL:
+  - freeze_negative_result
+  - verify_execution_integrity
+  - bounded_diagnostics
+  - reassess_hypothesis
+  new_experiment_after_FAIL: requires_new_protocol_version
+  on_PASS: future_P2_may_be_preregistered_but_is_not_authorized
+  P2_question: fixed_parameter_displacement_vs_FS_QGT_adaptive_manifold_displacement

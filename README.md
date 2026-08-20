@@ -63,7 +63,8 @@ Components enter only through the gates in [PLAN.md](PLAN.md); they are not impl
 
 ```text
 src/hamiltonian_qda/{datasets,models,augmentation,geometry,physics,metrics}/
-configs/protocol_v1.yaml   # immutable P1 contract; READY but not executed
+configs/protocol_v1.yaml   # immutable v1.0 contract; materialization blocked
+configs/protocol_v1_1.yaml # frozen v1.1 amendment; READY but not executed
 experiments/               # future config-driven entry points
 tests/                     # bootstrap contract checks
 docs/                      # evidence, hypothesis, threats, provenance
@@ -81,4 +82,4 @@ uv sync --dev && uv run pytest && uv run ruff check .
 
 ## Scope and Non-Claims
 
-P0 produces no scientific result. **Protocol v1 is FROZEN; P1 is READY but has not run.** P1 does not implement QuDDPM, AGP, symmetry augmentation, geometry-adaptive sampling, learned generation, or hyperparameter tuning. FS locality and physical observables do not establish label preservation. Exact Hamiltonian resampling is an oracle existence test, not a practical scalable algorithm. If it fails, there is no immediate justification for AGP, QuDDPM, or learned approximations; if it passes, later work may preregister geometry-adaptive or approximate transport. A 4-qubit TFIM result cannot establish generality.
+P0 produces no scientific result. **Protocol v1.0 is FROZEN / MATERIALIZATION BLOCKED; Protocol v1.1 is FROZEN and P1 is READY but has not run.** See [the v1.1 amendment](docs/protocol_amendment_v1_1.md). P1 does not implement QuDDPM, AGP, symmetry augmentation, geometry-adaptive sampling, learned generation, or hyperparameter tuning. FS locality and physical observables do not establish label preservation. Exact Hamiltonian resampling is an oracle existence test, not a practical scalable algorithm. If it fails, there is no immediate justification for AGP, QuDDPM, or learned approximations; if it passes, later work may preregister geometry-adaptive or approximate transport. A 4-qubit TFIM result cannot establish generality.

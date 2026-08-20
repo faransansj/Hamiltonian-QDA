@@ -1,0 +1,65 @@
+version: 1.1.0
+immutable: true
+rng: numpy.random.Generator
+bit_generator: PCG64DXSM
+seed_derivation: SHA-256 of canonical UTF-8 text; first 16 digest bytes interpreted big-endian unsigned;
+  initialize numpy.random.PCG64DXSM(seed)
+base_seeds:
+  dataset_generation: 11001
+  split_construction: 12001
+  source_assignment: 13001
+  c1_generic_perturbation: 21001
+  c2_target_proposal: 22001
+  bootstrap: 51001
+qcnn:
+  initialization_seeds:
+  - 31001
+  - 31002
+  - 31003
+  optimizer_seeds:
+  - 41001
+  - 41002
+  - 41003
+realizations:
+  count: 12
+  ids:
+  - D00
+  - D01
+  - D02
+  - D03
+  - D04
+  - D05
+  - D06
+  - D07
+  - D08
+  - D09
+  - D10
+  - D11
+  source_assignment_derivation:
+  - SOURCE
+  - source_assignment
+  - class_label
+  - source_assignment_root_seed
+per_source_domains:
+  c1:
+    payload: hamiltonian-qda|1.1.0|C1|tangent|REALIZATION|CLASS|STATE_INDEX|21001
+    purpose: tangent
+  c2:
+    payload: hamiltonian-qda|1.1.0|C2|proposal|REALIZATION|CLASS|STATE_INDEX|22001
+    purpose: proposal
+bootstrap_domain:
+- bootstrap-v1
+- 51001
+replacement_policy: forbidden_due_to_failure_or_result
+serialization:
+  encoding: UTF-8
+  separator: '|'
+  whitespace: none
+  integers: base-10 no leading zeros
+source_assignment:
+  root_seed: 13001
+  streams: 2
+  identity:
+  - class_label
+  realization_id_used: false
+  payload: hamiltonian-qda|1.1.0|SOURCE|source_assignment|CLASS|13001

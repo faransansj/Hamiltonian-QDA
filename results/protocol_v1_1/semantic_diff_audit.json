@@ -1,0 +1,35 @@
+{
+  "allowed_differences": [
+    "protocol version",
+    "source-assignment RNG semantics",
+    "canonical state identity",
+    "seed serialization",
+    "seed derivation",
+    "provenance"
+  ],
+  "amended_version": "1.1.0",
+  "parent_protocol_sha256": "ee1219a2188bcc428dcb5331e7444ab686bb71ac4ae6a86e6d8959affe933945",
+  "parent_version": "1.0.0",
+  "required_unchanged": {
+    "C0": "PASS",
+    "C1 distribution": "PASS",
+    "C2 distribution": "PASS",
+    "FS tolerance": "PASS",
+    "QCNN": "PASS",
+    "TFIM": "PASS",
+    "bootstrap": "PASS",
+    "decision rule": "PASS",
+    "endpoint": "PASS",
+    "estimands": "PASS",
+    "g universe": "PASS",
+    "labels": "PASS",
+    "minimum effect": "PASS",
+    "real/synthetic budgets": "PASS",
+    "realization count": "PASS",
+    "retry limits": "PASS",
+    "splits": "PASS"
+  },
+  "scientific_semantics_unchanged": true,
+  "semantic_diff_gate": "PASS",
+  "unexpected_differences": []
+}
