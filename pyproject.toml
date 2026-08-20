@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hamiltonian-qda"
+version = "0.1.0"
+description = "Protocol-first study of physical-manifold quantum data augmentation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0", "pyyaml>=6.0"]
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.9"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hamiltonian_qda"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

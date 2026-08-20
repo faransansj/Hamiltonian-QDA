@@ -1,0 +1,151 @@
+protocol:
+  name: tfim_exact_hamiltonian_manifold_oracle
+  version: 0.1.0
+  status: PROPOSED_FROZEN_FOR_REVIEW
+  phase: P1
+  execution_authorized: false
+  preregistration_note: Numeric grid and QCNN implementation must be frozen before status becomes FROZEN.
+
+question: >-
+  Under a fixed train-only augmentation budget, does exact TFIM ground-state sampling along
+  the Hamiltonian parameter manifold improve blocked-g QCNN test accuracy relative to paired
+  real-only and generic state-space controls?
+
+system:
+  family: one_dimensional_open_boundary_TFIM
+  qubits: 4
+  hamiltonian: "H(g) = -sum_{i=1}^{n-1} Z_i Z_{i+1} - g sum_{i=1}^{n} X_i"
+  coupling_J: 1.0
+  state: nondegenerate_ground_state
+  solver: exact_hermitian_eigendecomposition
+  degeneracy_gap_tolerance: 1.0e-10
+
+labels:
+  task: binary_operational_phase_classification
+  rule: "y(g) = 0 if g < 1; y(g) = 1 if g > 1"
+  critical_point_policy: "g = 1 is excluded from labeled examples"
+  preservation: >-
+    A synthetic state preserves its source label only when its target g' remains strictly on
+    the same side of g=1 as the source. FS locality and observable similarity are diagnostics,
+    not label-preservation rules.
+
+splits:
+  unit: Hamiltonian_parameter_value
+  policy: blocked_parameter_OOD
+  disjoint_parameter_values: true
+  blocked_test_values: TO_FREEZE_AFTER_P0_SPLIT_AUDIT
+  validation_values: TO_FREEZE_AFTER_P0_SPLIT_AUDIT
+  final_test_use: once_after_all_protocol_choices
+  leakage_prohibitions:
+    - augmentation_from_validation_or_test_states
+    - geometry_or_threshold_fit_on_validation_or_test_states
+    - neighbor_selection_using_validation_or_test_states
+    - target_parameter_selection_using_validation_or_test_results
+    - model_or_baseline_tuning_on_final_test
+
+arms:
+  primary:
+    - real_only
+    - generic_random_state_space_control
+    - exact_hamiltonian_manifold_oracle
+  deferred:
+    - geometry_adaptive_manifold
+    - symmetry_augmentation
+    - approximate_physical_transport
+    - learned_generator
+  fairness: >-
+    Paired arms use identical real subsets, QCNN initialization seeds, optimizer seeds,
+    training updates, and accepted synthetic count.
+
+augmentation:
+  train_only: true
+  synthetic_to_real_ratio: 1.0
+  source_sampling: stratified_by_label
+  oracle_target_sampling: >-
+    Sample g' from a predeclared train-support proposal centered on source g; reject values
+    crossing g=1, outside train support, or duplicating any held-out parameter.
+  generic_control: TO_FREEZE_FROM_MINIMAL_PRIOR_BASELINE
+  source_state_id_required: true
+  provenance_fields:
+    - synthetic_state_id
+    - source_state_id
+    - source_g
+    - target_g
+    - label
+    - arm
+    - rng_seed
+    - config_hash
+    - state_hash
+
+budgets:
+  real_per_class: [10, 25, 50, 100]
+  synthetic_ratio: [1.0]
+  repeats: 3
+  seeds: [1729, 2718, 31415]
+  expensive_p0_runs: 0
+
+model:
+  family: fixed_QCNN
+  architecture: TO_FREEZE_BEFORE_EXECUTION
+  optimizer: SPSA
+  parameter_updates: 300
+  early_stopping: false
+  checkpoint_selection: final
+  validation_use: protocol_checks_only
+
+endpoints:
+  primary: blocked_parameter_test_accuracy
+  primary_estimand: mean_paired_delta_exact_oracle_minus_real_only
+  key_control_estimand: mean_paired_delta_exact_oracle_minus_generic_control
+  secondary_downstream:
+    - macro_f1
+    - per_seed_paired_delta
+    - budget_dependence_descriptive
+  state_quality:
+    - fidelity
+    - fubini_study_distance
+    - nearest_training_state_fidelity
+    - exact_duplicate_rate
+    - near_duplicate_rate
+  physical_validity:
+    - hamiltonian_residual
+    - energy_deviation
+    - magnetization_observables
+    - symmetry_sector_consistency
+    - spectral_gap
+
+statistics:
+  aggregation: mean_paired_delta_across_predeclared_runs
+  confidence_interval: paired_bootstrap_95_percent
+  bootstrap_draws: 100000
+  minimum_mean_effect: 0.02
+  oracle_pass_rule: >-
+    PASS only if all expected runs complete, the oracle-minus-real-only mean paired delta is
+    at least 0.02, its paired-bootstrap 95% CI lower bound is above zero, and the oracle is
+    not inferior to the generic control on the predeclared key comparison.
+  missing_or_failed_runs: no_retry_count_as_failed
+  outlier_removal: forbidden
+  multiplicity: primary_endpoint_only; secondary_results_are_descriptive
+
+stopping:
+  p1_stop: >-
+    If the exact manifold oracle does not PASS, stop this research sequence; do not proceed
+    to geometry adaptation, symmetry augmentation, AGP, learned transport, or QuDDPM.
+  safety_stop:
+    - split_or_provenance_audit_failure
+    - held_out_data_access_before_final_evaluation
+    - eigensolver_residual_or_gap_gate_failure
+    - incomplete_paired_run_matrix
+
+reproducibility:
+  rng_family: numpy.Generator
+  bit_generator: PCG64DXSM
+  record:
+    - random_seeds
+    - dataset_hashes
+    - config_hash
+    - git_sha
+    - environment
+    - dependency_lock
+    - source_and_synthetic_state_provenance
+    - split_manifest
