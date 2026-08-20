@@ -1,0 +1,20 @@
+{
+  "decision": "PROTOCOL_REVISION_REQUIRED",
+  "materialization_authorized": false,
+  "reason": "Contract items are MISSING, including exact RNG draw mapping and cross-class traversal; hidden defaults would be required.",
+  "missing_item_ids": [
+    4,
+    5,
+    9,
+    17,
+    18,
+    19,
+    20,
+    22
+  ],
+  "conflict_item_ids": [],
+  "independent_review": "FAIL_FINDINGS_INCORPORATED",
+  "scientific_experiments_executed": 0,
+  "C1_C2_materialized": false,
+  "next_action": "Create the minimum protocol revision listed in audit.json, freeze it, then repeat this audit."
+}

@@ -1,0 +1,172 @@
+{
+  "protocol_version": "1.1.0",
+  "protocol_hash": "8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80",
+  "classification_values": [
+    "RECOVERED",
+    "MISSING",
+    "CONFLICT",
+    "NOT_APPLICABLE"
+  ],
+  "items": [
+    {
+      "id": 1,
+      "item": "arm identifier and scientific purpose",
+      "status": "RECOVERED",
+      "evidence": "configs/protocol_v1_1.yaml arms,C1_generator,C2_proposal",
+      "finding": "C1 generic displacement-matched tangent control; C2 exact Hamiltonian-manifold oracle."
+    },
+    {
+      "id": 2,
+      "item": "exact P1 assignment binding",
+      "status": "RECOVERED",
+      "evidence": "source_assignment.C1_C2_pairing; C1_generator.source_pairing; P1 source_assignments.json",
+      "finding": "Exact ordered source equality for C1 and C2."
+    },
+    {
+      "id": 3,
+      "item": "source_state_id / state_index rules",
+      "status": "RECOVERED",
+      "evidence": "docs/protocol_amendment_v1_1.md; provenance_schema",
+      "finding": "state_index is authoritative RNG identity; display ID is non-authoritative; provenance uses source_state_index."
+    },
+    {
+      "id": 4,
+      "item": "realization/class/source ordering",
+      "status": "MISSING",
+      "evidence": "source_assignment.method; P1 source_assignments.json",
+      "finding": "Per-realization source order is frozen within each class, but authoritative cross-class candidate traversal order is absent; novelty uses prior accepted synthetics, so traversal can affect acceptance."
+    },
+    {
+      "id": 5,
+      "item": "expected output count and shape",
+      "status": "MISSING",
+      "evidence": "budget; qcnn input",
+      "finding": "Logical count is 1200 synthetic states per arm and each statevector has 16 complex128 entries, but serialized aggregate/per-file shape is unspecified."
+    },
+    {
+      "id": 6,
+      "item": "transformation/materialization semantics",
+      "status": "RECOVERED",
+      "evidence": "C1_generator; C2_proposal; configs/tfim_v1.yaml",
+      "finding": "Candidate construction and exact-ground-state proposal semantics are explicit."
+    },
+    {
+      "id": 7,
+      "item": "all root/child seed domains",
+      "status": "RECOVERED",
+      "evidence": "configs/seed_manifest_v1_1.yaml",
+      "finding": "C1 root 21001, C2 root 22001; child identity realization,class,state_index."
+    },
+    {
+      "id": 8,
+      "item": "canonical seed payload",
+      "status": "RECOVERED",
+      "evidence": "docs/protocol_amendment_v1_1.md; seed_manifest",
+      "finding": "Exact UTF-8 pipe-delimited payload and SHA-256/first-16-byte derivation."
+    },
+    {
+      "id": 9,
+      "item": "RNG engine and stream lifecycle",
+      "status": "MISSING",
+      "evidence": "seed_manifest; amendment",
+      "finding": "PCG64DXSM is frozen, but exact NumPy sampling calls and scalar/vector component draw order are not; distribution names alone do not determine consumed bits or candidates."
+    },
+    {
+      "id": 10,
+      "item": "per-source initialization vs persistent stream",
+      "status": "RECOVERED",
+      "evidence": "amendment; candidate_enumeration",
+      "finding": "A fresh per-source/per-arm stream; persistent only across attempts for that output."
+    },
+    {
+      "id": 11,
+      "item": "retry/redraw/replacement/exhaustion",
+      "status": "RECOVERED",
+      "evidence": "C1_generator; C2_proposal; budget.proposal_failure",
+      "finding": "Attempts 0..127, reject/continue, first accepted, no fallback/replacement/reduced count; BLOCKED."
+    },
+    {
+      "id": 12,
+      "item": "numerical dtype and tolerance",
+      "status": "RECOVERED",
+      "evidence": "tfim_v1; C1_generator; validity; novelty",
+      "finding": "complex128/float64 and all stated tolerances recovered."
+    },
+    {
+      "id": 13,
+      "item": "normalization/physicality validation",
+      "status": "RECOVERED",
+      "evidence": "validity; tfim_v1",
+      "finding": "C1/C2 validation requirements and tolerances explicit; C1 residual N/A."
+    },
+    {
+      "id": 14,
+      "item": "exact/projective duplicate validation",
+      "status": "RECOVERED",
+      "evidence": "novelty",
+      "finding": "Exact hash and projective thresholds/actions explicit."
+    },
+    {
+      "id": 15,
+      "item": "cross-realization/cross-arm independence",
+      "status": "RECOVERED",
+      "evidence": "source_assignment; seed payload domains; novelty.cross_arm_duplicates",
+      "finding": "Sources disjoint across realizations; arm/realization-separated RNG domains; cross-arm duplicates report-only."
+    },
+    {
+      "id": 16,
+      "item": "provenance required fields",
+      "status": "RECOVERED",
+      "evidence": "provenance_schema.required_fields",
+      "finding": "Required scientific provenance fields explicit."
+    },
+    {
+      "id": 17,
+      "item": "output directory and filename schema",
+      "status": "MISSING",
+      "evidence": "repository-wide search; experiments/README.md",
+      "finding": "No authoritative C1/C2 output directory, filename, synthetic_id, or path schema exists."
+    },
+    {
+      "id": 18,
+      "item": "artifact checksum and freeze schema",
+      "status": "MISSING",
+      "evidence": "P1 freeze is prior artifact, not C1/C2 contract",
+      "finding": "No protocol-authoritative C1/C2 checksum set, manifest membership, serialization, or freeze schema."
+    },
+    {
+      "id": 19,
+      "item": "deterministic replay criterion",
+      "status": "MISSING",
+      "evidence": "seed rules only",
+      "finding": "Generation is seeded, but byte/numeric replay equality, serialization canonicalization, and comparison tolerance are not specified for C1/C2 artifacts."
+    },
+    {
+      "id": 20,
+      "item": "downstream benchmark input contract",
+      "status": "MISSING",
+      "evidence": "qcnn_v1 input; protocol pairing only",
+      "finding": "Statevector dtype/shape and scientific pairing are known, but materialized dataset layout, labels/order, and loader contract are absent."
+    },
+    {
+      "id": 21,
+      "item": "materialization failure handling",
+      "status": "RECOVERED",
+      "evidence": "budget.proposal_failure; validity.any_failure_before_training",
+      "finding": "Any pre-training proposal/validity failure is BLOCKED, no replacement or reduced count."
+    },
+    {
+      "id": 22,
+      "item": "unspecified runtime parameters",
+      "status": "MISSING",
+      "evidence": "items 5,17-20",
+      "finding": "Output identity/layout/replay/downstream handoff, cross-class traversal, and exact RNG draw mapping remain unspecified; hidden defaults would be required."
+    }
+  ],
+  "summary": {
+    "RECOVERED": 14,
+    "MISSING": 8,
+    "CONFLICT": 0,
+    "NOT_APPLICABLE": 0
+  }
+}

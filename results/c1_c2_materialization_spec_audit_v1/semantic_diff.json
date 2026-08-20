@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "parent_protocol_hash": "ee1219a2188bcc428dcb5331e7444ab686bb71ac4ae6a86e6d8959affe933945",
+  "amended_protocol_hash": "8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80",
+  "v1_1_scope_limited_to": [
+    "source-assignment RNG semantics",
+    "canonical source-state identity",
+    "seed serialization and derivation",
+    "version/provenance"
+  ],
+  "C1_semantics_unchanged": true,
+  "C2_semantics_unchanged": true,
+  "other_scientific_semantics_unchanged": true,
+  "P1_assignment_interpretation_identical_between_C1_C2": true,
+  "implementation_config_manifest_test_conflicts": [],
+  "note": "Completeness gaps are omissions, not semantic conflicts."
+}

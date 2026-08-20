@@ -1,0 +1,67 @@
+{
+  "status": "PROTOCOL_REVISION_REQUIRED",
+  "starting_commit": "b04740dd2514ecf119cd622e2154bf5703858a31",
+  "branch": "main",
+  "anchor_integrity": "PASS",
+  "protocol": {
+    "version": "1.1.0",
+    "sha256": "8daba32d38a24312fccfd1234b3f16af97b1f302828a24acf85c1237942b1a80"
+  },
+  "p1_integrity": {
+    "status": "PASS",
+    "hashes": {
+      "freeze_manifest.json": "1f8b28ec08f0686ea4b1162fbf62430dd118c34e13d50533e5f9572e541197e0",
+      "source_assignments.json": "93c9e13bc4cd7fead47e14b4001ef707dc9088c1f2001866b66d3aa3e10f18c3",
+      "source_states.npz": "afcc0eb81a0f081e937554622a43484d62370552342a7ce97ad80f78f364a25e",
+      "provenance.json": "edb856bd6f4034046a70c402b23abae3ce90ea518765a5a03fb7bf26a69fd558",
+      "materialization_audit.json": "9dfbe1a50efee381721c79257890d890b83df0c3a7caf98df6ddb5566b02b413"
+    },
+    "counts": {
+      "realizations": 12,
+      "classes": 2,
+      "sources_per_class_per_realization": 50,
+      "assignments": 1200,
+      "unique_per_class": 600,
+      "maximum_pairwise_realization_overlap": 0,
+      "all_sources_train": true
+    },
+    "deterministic_replay": "PASS"
+  },
+  "contract_summary": {
+    "RECOVERED": 14,
+    "MISSING": 8,
+    "CONFLICT": 0,
+    "NOT_APPLICABLE": 0
+  },
+  "C1_status": "MISSING",
+  "C2_status": "MISSING",
+  "dry_resolution": "FAIL_CLOSED",
+  "scientific_experiments_executed": 0,
+  "C1_C2_materialized": false,
+  "downstream_QCNN_executed": false,
+  "test_metrics_accessed": false,
+  "blockers": [
+    "Per-realization source order is frozen within each class, but authoritative cross-class candidate traversal order is absent; novelty uses prior accepted synthetics, so traversal can affect acceptance.",
+    "Logical count is 1200 synthetic states per arm and each statevector has 16 complex128 entries, but serialized aggregate/per-file shape is unspecified.",
+    "PCG64DXSM is frozen, but exact NumPy sampling calls and scalar/vector component draw order are not; distribution names alone do not determine consumed bits or candidates.",
+    "No authoritative C1/C2 output directory, filename, synthetic_id, or path schema exists.",
+    "No protocol-authoritative C1/C2 checksum set, manifest membership, serialization, or freeze schema.",
+    "Generation is seeded, but byte/numeric replay equality, serialization canonicalization, and comparison tolerance are not specified for C1/C2 artifacts.",
+    "Statevector dtype/shape and scientific pairing are known, but materialized dataset layout, labels/order, and loader contract are absent.",
+    "Output identity/layout/replay/downstream handoff, cross-class traversal, and exact RNG draw mapping remain unspecified; hidden defaults would be required."
+  ],
+  "minimum_protocol_revision": [
+    "Specify canonical cross-class/source candidate traversal order within each realization.",
+    "Specify exact NumPy RNG sampling calls, arguments, scalar/vector draw order, and C1 component consumption order for every attempt.",
+    "Specify canonical synthetic_id plus output directory/filename and serialized array/layout schema.",
+    "Specify C1/C2 artifact manifest membership, checksum/serialization, freeze procedure, and deterministic replay equality/tolerance.",
+    "Specify downstream materialized-dataset ordering/layout/loader contract without changing scientific semantics."
+  ],
+  "unspecified_randomness": true,
+  "independent_review": {
+    "status": "FAIL",
+    "decision_consistent": true,
+    "findings_incorporated": true,
+    "protocol_or_P1_modified": false
+  }
+}
