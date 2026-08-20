@@ -1,0 +1,43 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "configs/protocol_v1.yaml",
+      "sha256": "ee1219a2188bcc428dcb5331e7444ab686bb71ac4ae6a86e6d8959affe933945"
+    },
+    {
+      "path": "configs/seed_manifest_v1.yaml",
+      "sha256": "ecbd9403c4220f5df960cb2ece4995d0c0c82563906467aec78f2f1ee8a88733"
+    },
+    {
+      "path": "configs/tfim_v1.yaml",
+      "sha256": "ad35d2edf0cd866396713ca79cee010d1b39a9f64de2e69c4fdde517ec9c0fe8"
+    },
+    {
+      "path": "configs/split_manifest_v1.yaml",
+      "sha256": "f69a132ae6007e91f4c17af8da91a0f9c609c1c746b0fd86ff250a6b484ba862"
+    },
+    {
+      "path": "configs/qcnn_v1.yaml",
+      "sha256": "99073046bb395ade81e1e4196ee1f30b8a09d35c6a65cba296da56c55fb629cf"
+    },
+    {
+      "path": "docs/statistical_plan_v1.md",
+      "sha256": "90efe49e3f54716cf84f64a50c582e2624b3a6b1df8561ab78ef9b75150721bd"
+    },
+    {
+      "path": "docs/protocol_v1.md",
+      "sha256": "b0469f341d24d2b0ff51312a8146dfc5a2e38133db9a39b7da1289ab6938925c"
+    },
+    {
+      "path": "docs/p1_execution_gate.md",
+      "sha256": "cf8ffe2216f025d8c36455b3888136fc4557b79ff871452e875187a89c13f1d5"
+    },
+    {
+      "path": "results/protocol_v1/p1_execution_gate.json",
+      "sha256": "b8f1ab6754b8f878265fdf12cf653f68b2bf9cb1cf9e23dcc09c1a60cb40e02a"
+    }
+  ],
+  "immutable": true,
+  "protocol_version": "1.0.0"
+}

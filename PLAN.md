@@ -1,63 +1,29 @@
 # Gated Research Plan
 
-No phase advances automatically. Each gate requires a reviewed, hashed config and clean repository health checks.
+Protocol v1 is frozen and P1 is READY, but this repository contains no scientific P1 execution or result.
 
-## P0 — Literature and Protocol Formalization
+## P0 — Complete
 
-**Goal:** show the question is defensible, sufficiently distinct for a bounded study, and falsifiable.
-
-Outputs: `docs/literature_review.md`, `docs/research_hypothesis.md`, `docs/threats_to_validity.md`, `docs/provenance.md`, and `configs/protocol_v0.yaml`.
-
-Exit gate:
-
-- complete backward/forward citation chaining and terminology search;
-- freeze TFIM convention, `g` grid, blocked train/validation/test values, label rule, target proposal, generic control, QCNN, budgets, named seeds, thresholds, and analysis;
-- independently audit leakage and state separation;
-- set `execution_authorized: true` only in an approved protocol-freeze commit.
-
-No expensive experiment runs in P0.
+Literature, hypothesis, threats, provenance, exact TFIM/grid/splits, C1/C2 generators, QCNN instrument, seeds, statistics, validity gates, and freeze hashes are preregistered. Any material P1 change requires Protocol v2.
 
 ## P1 — Exact Hamiltonian-Manifold Oracle
 
-**Question:** if extra training states come from the true ground-state manifold, does fixed-QCNN blocked-`g` generalization improve?
+Run only C0 Real-only, C1 Generic displacement-matched control, and C2 Exact Hamiltonian-Manifold Oracle. Use 12 disjoint 50-per-class source realizations, one synthetic per source for C1/C2, three paired QCNN seed streams, and the fixed 300-update instrument. The primary endpoint is blocked-`g` accuracy and the primary contrast is C2−C1.
 
-```text
-g → same-label train-support g' → exact solve H(g') → |ψ₀(g')⟩
-```
+PASS requires valid complete execution, mean delta at least `0.02`, and paired realization-bootstrap 95% CI lower bound greater than zero. Valid completion that misses either condition is FAIL. Integrity violations are INVALID. Pre-execution infeasibility is BLOCKED.
 
-Run only three arms: real-only, equal-budget generic random state-space control, and exact oracle. Augmentation is train-only. Record state/source IDs, `g/g'`, labels, hashes, seeds, residuals, gaps, config hash, git SHA, environment, and split manifest.
+**FAIL:** freeze the negative result, verify integrity, allow bounded diagnostics, and stop. A new scientific experiment requires a new protocol.
 
-Primary endpoint and PASS rule are frozen in `configs/protocol_v0.yaml`. Exact diagonalization is an oracle, not the proposed scalable method.
+**PASS:** a future P2 may be preregistered; it is not automatically authorized.
 
-**Critical gate:** if P1 does not PASS, stop. Do not proceed to P2–P4, AGP, learned transport, or QuDDPM.
+## Future Roadmap — Descriptive Only
 
-## P2 — Geometry-Adaptive Manifold Augmentation
+- **P2:** fixed Hamiltonian displacement vs FS/QGT-adaptive on-manifold displacement.
+- **P3:** validated physics/symmetry certificates and ablations.
+- **P4:** approximate physical transport/AGP against exact targets.
+- **P5:** larger systems, other Hamiltonians/models, noisy or mixed states.
+- **P6:** learned physical transport or QuDDPM-like generator.
 
-Run only after P1 PASS. Compare fixed `δg` with FS/QGT-controlled `δg` while both endpoints remain exact states on `M_H`. Geometry selects local displacement; it does not generate arbitrary states. Downstream blocked-parameter accuracy remains the endpoint.
+No phase may use the best P1 examples to set future thresholds.
 
-## P3 — Validated Symmetry Augmentation
-
-Run only after proving the frozen task label is invariant under each selected action. Separate Hamiltonian symmetry, state symmetry, dataset closure, label invariance, and model equivariance. Compare manifold-only, symmetry-only, and combined arms.
-
-## P4 — Approximate Physical Transport
-
-Run only after P1 PASS. Approximate `|ψ(g+δg)⟩ ≈ exp(-iδg A_g)|ψ(g)⟩` using one predeclared quasi-adiabatic/AGP family. Compare with exact targets on fidelity, FS distance, residual, observables, downstream utility, and cost. Do not tune against final blocked-test results.
-
-## P5 — Generalization
-
-After a successful TFIM proof of concept, preregister separate studies for larger systems, other Hamiltonians, classifiers, mixed/noisy states, phases, or hardware. No 4-qubit result implies generality.
-
-## Baseline Roadmap
-
-| Arm | First eligible phase |
-|---|---|
-| Real-only | P1 |
-| Generic/random state-space perturbation | P1 |
-| Previous physics-aware style | later ablation after P1 |
-| Previous geometry-aware style | later ablation after P1 |
-| Exact Hamiltonian-manifold oracle | P1 |
-| Manifold + geometry control | P2 |
-| Manifold + validated symmetry | P3 |
-| Approximate physical transport | P4 |
-
-Verify: `uv run pytest && uv run ruff check .`.
+Verify: `uv run pytest && python scripts/validate_protocol_v1.py`.

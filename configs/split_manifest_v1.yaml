@@ -1,0 +1,36 @@
+version: 1.0.0
+representation: {field: g_milli, integer_scale: 1000, conversion: "g = g_milli / 1000"}
+complete_grid:
+  g_min_milli: 100
+  g_max_milli: 1900
+  spacing_milli: 1
+  valid_intervals_inclusive: [[100, 949], [1051, 1900]]
+  invalid_intervals_inclusive: [[950, 1050]]
+  states_per_g: 1
+sets:
+  train_intervals_inclusive: [[100, 449], [650, 949], [1051, 1350], [1551, 1900]]
+  validation_intervals_inclusive: [[450, 499], [600, 649], [1351, 1400], [1501, 1550]]
+  test_intervals_inclusive: [[500, 599], [1401, 1500]]
+  guard_semantics: validation_only_buffer_on_each_side_of_each_test_block
+  minimum_train_test_gap_milli: 51
+counts:
+  complete_valid: 1700
+  train: 1300
+  validation: 200
+  test: 200
+  per_class: {train: 650, validation: 100, test: 100}
+labels:
+  critical_threshold_milli: 1000
+  critical_exclusion_margin_milli: 50
+  rule:
+    class_0: "100 <= g_milli <= 949"
+    class_1: "1051 <= g_milli <= 1900"
+    invalid: "g_milli < 100 or 950 <= g_milli <= 1050 or g_milli > 1900"
+  boundary_behavior: g_milli_950_and_1050_invalid
+split_unit: Hamiltonian_parameter_value
+construction: deterministic_interval_membership
+split_seed_role: domain_separator_and_manifest_audit_only
+dataset_generation_seed_role: domain_separator_and_record_order_only
+augmentation_runtime_access:
+  allowed: [source_record, train_intervals_inclusive, label_rule]
+  forbidden: [validation_intervals_inclusive, test_intervals_inclusive, validation_states, test_states, held_out_geometry]

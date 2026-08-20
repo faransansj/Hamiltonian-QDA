@@ -4,15 +4,16 @@
 
 ## Primary Hypothesis
 
-For 4-qubit open-boundary TFIM ground states with operational labels `y=0` for `g<1` and `y=1` for `g>1` (`g=1` excluded), train-only exact ground states sampled at nearby, same-label Hamiltonian parameters improve fixed-QCNN blocked-parameter test accuracy under equal real and synthetic budgets.
+For frozen 4-qubit open-boundary TFIM ground states, train-only exact same-label states sampled on the Hamiltonian manifold improve fixed-QCNN blocked-parameter accuracy over generic projective-tangent states matched by source, count, and Fubini–Study displacement.
 
-The primary estimand is the mean paired difference:
+The Protocol v1 primary estimand is:
 
 ```text
-blocked-g accuracy(exact manifold oracle) - blocked-g accuracy(real-only)
+blocked-g accuracy(C2 Exact Hamiltonian-Manifold Oracle)
+- blocked-g accuracy(C1 Generic displacement-matched control)
 ```
 
-The key control estimand compares the oracle with an equal-budget generic random state-space perturbation arm.
+The C2−C0 real-only contrast is key secondary evidence and cannot rescue a failed primary contrast.
 
 ## Why an Oracle First
 
@@ -20,26 +21,25 @@ P1 asks whether useful augmentation exists on the true physical manifold. Exact 
 
 ## Operational Label Preservation
 
-A candidate preserves its source label if and only if `g'` remains strictly on the same side of `g=1` as source `g`. Candidates at `g=1`, across the threshold, outside predeclared train support, or at held-out parameter values are rejected.
+Using integer `g_milli`, `y=0` for `100≤g_milli≤949`, `y=1` for `1051≤g_milli≤1900`, and all other values are invalid. C2 requires exact label equality and membership in the source's connected train-support component.
 
 This is a finite-task operational definition, not a claim that four qubits exhibit a sharp thermodynamic phase transition. Fidelity, FS distance, magnetization, residual, and symmetry sector are diagnostics and cannot override the label rule.
 
 ## P1 Arms and Fairness
 
-1. **Real-only.** Frozen real subset.
-2. **Generic control.** Minimal predecessor-compatible random state-space perturbation, frozen before execution.
-3. **Exact manifold oracle.** `g→g'→H(g')→|ψ₀(g')⟩` with same-label and train-support constraints.
+1. **C0 Real-only.** Frozen 50-per-class real subset.
+2. **C1 Generic displacement-matched control.** One source-keyed isotropic projective-tangent state per C2 source.
+3. **C2 Exact Hamiltonian-Manifold Oracle.** `g→g'→H(g')→|ψ₀(g')⟩` with frozen same-label train-support proposal.
 
-Paired runs share real subsets, QCNN initialization, SPSA seed, update count, and accepted synthetic count. The generic-control implementation, exact `g` grid, blocked values, and QCNN circuit remain explicit P0 freeze items; no execution is authorized while any is unresolved.
+Paired runs share real subsets, QCNN initialization, SPSA stream, update count, and source ordering. C1 and C2 each add exactly 100 states per realization.
 
 ## Primary Endpoint and Gate
 
 Primary endpoint: final-checkpoint blocked-parameter test accuracy. P1 passes only if:
 
 - every expected paired run completes and provenance/split audits pass;
-- mean oracle-minus-real-only delta is at least `0.02`;
-- its predeclared paired-bootstrap 95% CI lower bound is greater than zero; and
-- the oracle is not inferior to the generic control under the frozen key comparison.
+- mean C2-minus-C1 delta is at least `0.02`; and
+- its predeclared paired-bootstrap 95% CI lower bound is greater than zero.
 
 Otherwise P1 fails or is invalidated by an integrity failure. No outlier removal, failed-run retry, test-driven arm modification, or post-hoc replacement of the primary endpoint is allowed.
 

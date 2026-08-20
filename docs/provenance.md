@@ -18,9 +18,11 @@ Any future copied or adapted component must append a row before merge:
 
 | Source repository | Commit | Source path | Destination | Adaptation | Validation |
 |---|---|---|---|---|---|
-| _none_ | — | — | — | — | — |
+| `faransansj/Conditional_QuDDPM` | `605e6f1a6f2f8c7a579895505a606bebe18110a4` | `src/conditional_quddpm/models/qcnn.py` | `configs/qcnn_v1.yaml` | Reused circuit, parameter sharing, readout, MSE, initialization, SPSA schedules, 300-update/final-checkpoint contract as a declarative specification; no source copied | Cross-checked against source and frozen Protocol v2.3 artifacts |
+| `faransansj/Conditional_QuDDPM` | `605e6f1a6f2f8c7a579895505a606bebe18110a4` | `src/conditional_quddpm/datasets/tfim.py` | `configs/tfim_v1.yaml` | Reused Hamiltonian sign, tensor order, open-boundary convention, exact-solve and phase conventions; v1 uses a new deterministic grid/split | Machine-readable completeness tests |
+| `faransansj/Conditional_QuDDPM` | `605e6f1a6f2f8c7a579895505a606bebe18110a4` | `src/conditional_quddpm/augmentation/geometry.py` | `configs/protocol_v1.yaml` | Adapted isotropic complex tangent construction; v1 matches each C2 displacement directly and changes retries/tolerances | Contract tests only; no scientific generation |
 
-Candidate minimal adaptations, only after review: TFIM matrix convention, frozen QCNN architecture, generic-control baseline, split audit, and metrics. Prefer clean reimplementation and behavior-level comparison.
+Scientific reason: retaining the archived QCNN makes the new C2-versus-C1 contrast comparable while changing only the augmentation direction. Protocol v1's deterministic grid, disjoint source realizations, C2 oracle, and C2-matched C1 control are new specifications. No prior datasets, results, weights, or implementation files were copied.
 
 ## New Repository
 

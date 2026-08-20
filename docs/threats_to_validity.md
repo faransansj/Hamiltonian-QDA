@@ -30,15 +30,15 @@ Four qubits, one open-boundary TFIM convention, one QCNN, noiseless pure ground 
 
 ## Statistical Conclusion Validity
 
-Three repeats and four budgets may give unstable intervals and induce budget multiplicity. Only the aggregated paired endpoint is confirmatory; budget and seed breakdowns are descriptive. A fixed `0.02` minimum effect inherits precedent but still requires scientific justification before freeze. Bootstrap assumptions and the number of independent units must be audited; synthetic samples derived from one source are not independent replicates.
+Protocol v1 uses one 50-per-class budget, 12 disjoint source realizations, and three paired QCNN seeds. The realization is the outer bootstrap cluster; synthetic samples and QCNN seeds are not independent datasets. Twelve finite-population clusters remain modest, all share one test grid, and percentile-bootstrap coverage may be imperfect. The `0.02` effect threshold is inherited and frozen to prevent outcome-dependent revision.
 
 ## Theoretical Validity
 
 Quasi-adiabatic arguments require regular, suitably gapped paths. Near the critical region, finite-size gaps can narrow and geometric sensitivity can rise. P1 uses exact endpoint solves and makes no claim of implemented adiabatic evolution. P4 cannot inherit validity from P1 without transport-error comparisons.
 
-## Researcher Degrees of Freedom
+## Frozen Degrees of Freedom
 
-Unfrozen choices currently block execution: parameter grid and held-out values, target proposal, generic control, QCNN architecture, validation role, gap/residual thresholds, and the non-inferiority margin for the key control comparison. Resolve them without blocked-test outcomes, hash the protocol, then change status from proposed to frozen in a dedicated review commit.
+Protocol v1 fixes the grid, split, target proposal, generic control, QCNN, validation role, numerical gates, seeds, primary budget, estimand, and statistics. Materialization may implement these rules but may not reinterpret them. Any scientific change requires Protocol v2.
 
 ## Stop Conditions
 

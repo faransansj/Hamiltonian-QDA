@@ -1,0 +1,35 @@
+version: 1.0.0
+qubits: 4
+boundary: open
+coupling_J: 1.0
+field_parameter: g
+hamiltonian: "H(g) = -1.0 * sum(i=0..2, Z_i Z_(i+1)) - g * sum(i=0..3, X_i)"
+sites: {indexing: zero_based, order: [0, 1, 2, 3]}
+basis:
+  ket_order: "|q0 q1 q2 q3>"
+  tensor_factor_order: [q0, q1, q2, q3]
+  vector_index_order: lexicographic_binary_0000_to_1111
+  qubit_0_significance: most_significant
+operators:
+  I: [[1, 0], [0, 1]]
+  X: [[0, 1], [1, 0]]
+  Z: [[1, 0], [0, -1]]
+numerics:
+  matrix_dtype: complex128
+  state_dtype: complex128
+  eigensolver: numpy.linalg.eigh
+  eigenpair_selection: ascending_index_0
+  lowest_eigenpairs_required: 2
+  degeneracy_rule: "BLOCKED if E1 - E0 <= 1.0e-10"
+  gap_tolerance: 1.0e-10
+  normalization_tolerance: 1.0e-12
+  eigenpair_residual_tolerance: 1.0e-10
+  finite_values_required: true
+global_phase:
+  rule: largest_magnitude_component_real_nonnegative
+  pivot_tie_break: smallest_vector_index
+  zero_tolerance: 1.0e-15
+  operation: "psi <- psi * exp(-i * arg(psi[pivot])); set pivot imaginary part to +0"
+state_hash:
+  algorithm: sha256
+  input: canonical_complex128_little_endian_interleaved_real_imag_bytes

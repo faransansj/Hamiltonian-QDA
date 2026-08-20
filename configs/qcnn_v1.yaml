@@ -1,0 +1,43 @@
+version: 1.0.0
+name: archived_fixed_4q_qcnn
+input: {qubits: 4, statevector_shape: [16], dtype: complex128}
+architecture:
+  reduction: "4 -> 2 -> 1"
+  parameter_count: 42
+  convolution:
+    parameter_count: 15
+    definition: "Euler(left,p0:3); Euler(right,p3:6); XX(p6); YY(p7); ZZ(p8); Euler(left,p9:12); Euler(right,p12:15)"
+    euler: "Rz(c) Ry(b) Rx(a)"
+    rotation: "R_P(theta)=cos(theta/2)I-i sin(theta/2)P"
+    interaction: "PP(theta)=cos(theta/2)I4-i sin(theta/2)(P tensor P)"
+  pooling:
+    parameter_count: 6
+    definition: "Euler(source,p0:3); Euler(sink,p3:6); CNOT(source,sink); Euler(sink,p3:6)^dagger"
+    cnot_basis_order: ["00", "01", "10", "11"]
+  layers:
+    - {operation: shared_convolution, edges: [[0, 1], [2, 3], [1, 2], [3, 0]], parameters: "0:15"}
+    - {operation: shared_pool, source_sink: [[0, 2], [1, 3]], parameters: "15:21"}
+    - {operation: convolution, edges: [[2, 3]], parameters: "21:36"}
+    - {operation: pool, source_sink: [[2, 3]], parameters: "36:42"}
+readout:
+  qubit: 3
+  operator: Z
+  prediction: "class 1 iff expectation_Z3 >= 0; otherwise class 0"
+training:
+  loss: "full-batch mean((expectation_Z3 - (2*y-1))^2)"
+  optimizer: SPSA
+  parameter_updates: 300
+  objective_evaluations_per_update: 2
+  perturbation_distribution: iid_Rademacher_minus1_plus1
+  perturbation_schedule: "c_k = 0.1 / (k+1)^0.101"
+  learning_rate_schedule: "a_k = 0.15 / (k+1)^0.602"
+  gradient: "(L(theta+c_k*delta)-L(theta-c_k*delta))/(2*c_k)*delta"
+  update: "theta <- theta - a_k*gradient"
+  batch_schedule: full_training_set_each_objective_evaluation
+  initialization_distribution: "iid Normal(0, 0.1) for 42 parameters"
+  rng: numpy.Generator_PCG64DXSM
+  early_stopping: false
+  checkpoint: final_after_update_300
+  validation_usage: record_loss_and_accuracy_at_steps_0_through_300_only
+  validation_may_select_checkpoint: false
+  final_test_evaluations: one_after_all_runs_complete

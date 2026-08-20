@@ -7,4 +7,8 @@ dist/
 build/
 *.egg-info/
 artifacts/
-results/
+results/*
+!results/protocol_v1/
+results/protocol_v1/*
+!results/protocol_v1/p1_execution_gate.json
+!results/protocol_v1/freeze_manifest_v1.json

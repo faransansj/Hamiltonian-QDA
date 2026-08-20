@@ -24,7 +24,7 @@ That bounded result motivates this project. It does not prove augmentation is ge
 
 ## Proposed Hypothesis
 
-**H1:** Under a frozen blocked-parameter protocol and equal data/training budgets, exact ground states sampled along the TFIM Hamiltonian manifold improve blocked-parameter QCNN accuracy over real-only training and a generic state-space control.
+**H1:** Under frozen equal source/synthetic budgets, exact same-label TFIM ground states improve blocked-parameter QCNN accuracy over source-paired generic projective-tangent states matched to the same Fubini–Study displacement. C2−C1 is primary; C2−C0 is key secondary.
 
 P1 is an oracle test of whether useful on-manifold augmentation exists. Exact diagonalization is not claimed as a practical augmentation algorithm. Failure of the oracle gate stops the AGP, learned-transport, and generator sequence.
 
@@ -56,13 +56,14 @@ Components enter only through the gates in [PLAN.md](PLAN.md); they are not impl
 - **P2:** fixed parameter steps vs geometry-controlled on-manifold steps, only if P1 passes.
 - **P3:** validated symmetry ablations, only after task-level label invariance is proved.
 - **P4:** approximate physical transport, only if the exact oracle is useful.
-- **P5:** other sizes, Hamiltonians, models, and state types, only after a TFIM proof of concept.
+- **P5:** scaling and cross-system validation, only after a TFIM proof of concept.
+- **P6:** learned physical transport or a QuDDPM-like generator, only after useful transport is established.
 
 ## Repository Structure
 
 ```text
 src/hamiltonian_qda/{datasets,models,augmentation,geometry,physics,metrics}/
-configs/protocol_v0.yaml   # proposed P1 contract; execution disabled
+configs/protocol_v1.yaml   # immutable P1 contract; READY but not executed
 experiments/               # future config-driven entry points
 tests/                     # bootstrap contract checks
 docs/                      # evidence, hypothesis, threats, provenance
@@ -80,4 +81,4 @@ uv sync --dev && uv run pytest && uv run ruff check .
 
 ## Scope and Non-Claims
 
-P0 produces no scientific result. P1 does not implement QuDDPM, AGP, symmetry augmentation, geometry-adaptive sampling, learned generation, or hyperparameter tuning. FS locality and physical observables do not establish label preservation. Exact resampling is not assumed cheap. A 4-qubit TFIM result cannot establish generality.
+P0 produces no scientific result. **Protocol v1 is FROZEN; P1 is READY but has not run.** P1 does not implement QuDDPM, AGP, symmetry augmentation, geometry-adaptive sampling, learned generation, or hyperparameter tuning. FS locality and physical observables do not establish label preservation. Exact Hamiltonian resampling is an oracle existence test, not a practical scalable algorithm. If it fails, there is no immediate justification for AGP, QuDDPM, or learned approximations; if it passes, later work may preregister geometry-adaptive or approximate transport. A 4-qubit TFIM result cannot establish generality.
